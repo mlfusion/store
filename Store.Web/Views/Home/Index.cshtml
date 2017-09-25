@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Store.Web.ViewModels.CategoryViewModel>
+
+@{
+    ViewBag.Title = "Demo Store";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+
+</p>
+<div class="container">
+    <div class="jumbotron">
+
+        @foreach (var item in Model)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    @*@Html.DisplayFor(modelItem => item.Name)*@
+                    @Html.ActionLink("View all " + item.Name, "Index", new { category = item.Name }, new { @class = "pull-right" })
+                    @using (Html.BeginForm("Filter", "Home", new { category = item.Name }, FormMethod.Post, new { @class = "navbar-form" }))
+                    {
+                        @Html.TextBox("gadgetName", null, new { @class = "form-control", placeholder = "Search in " + item.Name })
+                    }
+
+
+                </div>
+                @foreach (var gadget in item.Gadgets)
+                {
+                    @Html.Partial("Gadget", gadget)
+                }
+
+                    @Html.Partial("_Upload", item)
+            </div>
+        }
+
+    </div>
+
+</div>
